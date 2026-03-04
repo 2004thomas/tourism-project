@@ -1,0 +1,168 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body>
+<div class="hero text-white text-center d-flex align-items-center justify-content-center" style="background-image:url('{{place.hero_image}}'); height:60vh; background-size:cover; background-position:center;">
+    <div>
+        <h1 class="display-4">{{place.name}}</h1>
+        <p class="lead">{{place.tagline}}</p>
+    </div>
+</div>
+
+<div class="container mt-3">
+    <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+        Back to Home
+    </a>
+</div>
+<!--  -->
+<div class="d-flex gap-4 my-4">
+
+    <!-- Gallery Icon -->
+    <a href="#gallery-section" class="text-decoration-none text-dark">
+        <div class="text-center">
+            <i class="bi bi-images fs-3"></i>
+            <p class="mb-0">Gallery</p>
+        </div>
+    </a>
+    <hr>
+
+<section id="gallery-section" class="my-5">
+    <h4 class="mb-4">📷 Gallery</h4>
+
+    {% if photos %}
+        <div class="row g-3">
+            {% for photo in photos %}
+                <div class="col-md-3 col-6">
+                    <img src="{{ photo.image.url }}" 
+                         class="img-fluid rounded shadow-sm">
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">No photos available yet.</p>
+    {% endif %}
+</section>
+
+    <!-- Review Icon -->
+    <a href="#review-section" class="text-decoration-none text-dark">
+        <div class="text-center">
+            <i class="bi bi-chat-dots fs-3"></i>
+            <p class="mb-0">Reviews</p>
+        </div>
+    </a>
+
+
+    <hr>
+
+<section id="review-section" class="my-5">
+    <h4 class="mb-4">📝 Reviews</h4>
+
+    {% if reviews %}
+        {% for review in reviews %}
+            <div class="card mb-3 shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title">
+                        {{ review.user.username }}
+                    </h6>
+                    <p class="card-text">
+                        {{ review.comment }}
+                    </p>
+                    <small class="text-muted">
+                        {{ review.created_at|date:"d M Y" }}
+                    </small>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-muted">No reviews yet.</p>
+    {% endif %}
+</section>
+
+</div>
+
+
+<!--  -->
+<div class="container mt-4">
+    <div class="card p-4 shadow-sm">
+        <h4>About</h4>
+        <p>{{place.about}}</p>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card p-3 shadow-sm h-100">
+                <h5>Key Highlights</h5>
+                <ul>
+                    {% for item in place.highlights.splitlines %}
+                        <li>{{item}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="col-md-6">
+            <div class="card p-3 shadow-sm h-100">
+                <h5>Essential Information</h5>
+                <ul>
+                    {% for item in place.essential_info.splitlines %}
+                        <li>{{item}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    
+    </div>
+</div>
+
+{% if place.booking_link %}
+    <div class="container text-center mt-4">
+        <a href="{{place.booling_link}}" target="_blank" class="btn btn-warning">
+            Book Now
+        </a>
+    </div>
+{% endif %}
+
+{% if place.latitude and place.longitude %}
+    <div class="container mt-5">
+        <div id="map" style="height: 400px;"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded",function () {
+            var lat={{place.latitude|default:"0"}};
+            var lng={{place.longitude|default:"0"}};
+
+            if(lat && lng){
+                var map=L.map('map').setView([lat,lng],13);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+                    attribution:'© OpenStreetMap contributors', maxZoom: 19
+                }).addTo(map);
+
+                L.marker([lat,lng]).addTo(map);
+            }
+        });
+        // var map=L.map('map').setView(
+        //     [{{place.latitude}},{{place.longitude}}],13
+        // );
+
+        // L.titleLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        // {
+        //     attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
+        // L.marker([{{place.latitude}},{{place.longitude}}]).addTo(map).bindPopup("{{place.name}}").openPopup();
+    </script>
+{% endif %}
+
+<!-- <p>latitude: {{place.latitude}}</p>
+<p>longitude: {{place.longitude}}</p> -->
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

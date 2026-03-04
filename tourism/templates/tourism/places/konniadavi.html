@@ -1,0 +1,216 @@
+
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" data-bs-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konni & Adavi | Explore PTA</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<style>
+
+.place-hero {
+  position: relative;
+  height: 70vh;
+  min-height: 400px;
+  background: url("https://www.keralatourism.org/images/eco-tourism/trekking_thumb/jungle-safari/Konni%20forest_16072018175921.jpg");
+  background-size: cover;
+  background-position: center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:white;
+}
+
+.place-hero::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+}
+
+.place-hero > * { position:relative; z-index:1; }
+
+.back-btn {
+  position:absolute;
+  top:20px;
+  left:20px;
+  padding:8px 14px;
+  background:rgba(0,0,0,0.4);
+  color:white;
+  border-radius:8px;
+  text-decoration:none;
+  font-size:18px;
+}
+
+.info-card {
+  border:none;
+  border-radius:15px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+  background:var(--bs-body-bg);
+  color:var(--bs-body-color);
+  transition:0.3s ease;
+}
+
+#map {
+  height:350px;
+  border-radius:12px;
+}
+
+body {
+  background:var(--bs-body-bg);
+  color:var(--bs-body-color);
+  transition:0.3s ease;
+}
+
+</style>
+</head>
+<body>
+
+<header class="place-hero">
+  <a href="javascript:history.back()" class="back-btn">
+    <i class="bi bi-arrow-left"></i>
+  </a>
+
+  <div>
+    <h1 class="display-4 fw-bold">Konni & Adavi</h1>
+    <p class="lead">Elephant Camp & Eco Tourism Experience</p>
+  </div>
+</header>
+
+<div class="container my-5">
+
+<!-- About -->
+<div class="card info-card p-4 mb-4">
+  <h3><i class="bi bi-info-circle-fill text-primary me-2"></i>About Konni & Adavi</h3>
+  <p>
+    Konni is famously known as the "Land of Elephants" and is home to the historic
+    Konni Elephant Training Center. Located amidst forested hills in Pathanamthitta district,
+    Konni offers a mix of wildlife, eco-tourism, and scenic beauty.
+  </p>
+  <p>
+    Adavi, located nearby, is an eco-tourism destination managed by the forest department,
+    offering bamboo rafting, coracle boating, and nature walks along the Kallar river.
+    Together, Konni and Adavi provide a refreshing nature-based travel experience.
+  </p>
+</div>
+
+<div class="row g-4 align-items-start">
+
+  <!-- Konni Elephant Camp -->
+  <div class="col-md-6">
+    <div class="card info-card p-4">
+      <h4><i class="bi bi-tree-fill text-success me-2"></i>Konni Elephant Camp</h4>
+      <ul>
+        <li>Historic elephant training center</li>
+        <li>Elephant feeding & interaction sessions</li>
+        <li>Elephant museum</li>
+        <li>Forest surroundings</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Adavi Eco Tourism -->
+  <div class="col-md-6">
+    <div class="card info-card p-4">
+      <h4><i class="bi bi-water text-primary me-2"></i>Adavi Eco Tourism</h4>
+      <ul>
+        <li>Bamboo rafting</li>
+        <li>Coracle boating</li>
+        <li>Nature trails</li>
+        <li>River-side relaxation spots</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- How to Reach -->
+  <div class="col-md-6">
+    <div class="card info-card p-4">
+      <h4><i class="bi bi-geo-alt-fill text-danger me-2"></i>How to Reach</h4>
+      <p><strong>Nearest Town:</strong> Konni</p>
+      <p><strong>Railway Station:</strong> Chengannur (approx. 35 km)</p>
+      <p><strong>Airport:</strong> Trivandrum International Airport (approx. 110 km)</p>
+      <p>Well connected by road; buses and taxis available.</p>
+    </div>
+  </div>
+
+  <!-- Entry & Booking -->
+  <div class="col-md-6">
+    <div class="card info-card p-4">
+      <h4><i class="bi bi-ticket-perforated-fill text-warning me-2"></i>Entry & Booking</h4>
+      <ul>
+        <li>Entry fee applicable at Elephant Camp</li>
+        <li>Boating tickets available at Adavi counter</li>
+        <li>Peak season may require early arrival</li>
+        <li>Forest department regulations apply</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- Safety -->
+<div class="card info-card p-4 my-4">
+  <h4><i class="bi bi-shield-exclamation text-danger me-2"></i>Safety Guidelines</h4>
+  <ul>
+    <li>Follow forest department instructions strictly</li>
+    <li>Avoid feeding animals without permission</li>
+    <li>Wear life jackets during boating</li>
+    <li>Do not litter; protect wildlife habitat</li>
+    <li>Travel during daytime for better safety</li>
+  </ul>
+</div>
+
+<!-- Nearby Facilities -->
+<div class="card info-card p-4 mb-4">
+  <h4><i class="bi bi-building text-success me-2"></i>Nearby Facilities</h4>
+  <ul>
+    <li>Restaurants and shops in Konni town</li>
+    <li>Petrol pumps within 5 km radius</li>
+    <li>Hospitals in Pathanamthitta town</li>
+    <li>Parking facilities available</li>
+  </ul>
+</div>
+
+<!-- Map -->
+<div class="card info-card p-4">
+  <h4><i class="bi bi-map me-2 text-primary"></i>Location Map</h4>
+  <div id="map"></div>
+</div>
+
+</div>
+
+<!-- Leaflet -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme) {
+  document.documentElement.setAttribute("data-bs-theme", savedTheme);
+}
+
+const map = L.map('map').setView([9.2245, 76.8586], 13);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+L.marker([9.2245, 76.8586])
+  .addTo(map)
+  .bindPopup("<b>Konni Elephant Camp & Adavi Eco Tourism</b>")
+  .openPopup();
+</script>
+
+</body>
+</html>

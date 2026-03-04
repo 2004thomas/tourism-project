@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" data-bs-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mannera Waterfall | Explore PTA</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<style>
+.place-hero {
+  position: relative;
+  height: 70vh;
+  background: url("https://i.ytimg.com/vi/IGED_Dat1NU/maxresdefault.jpg");
+  background-size: cover;
+  background-position: center;
+  display:flex; align-items:center; justify-content:center;
+  text-align:center; color:white;
+}
+.place-hero::before {
+  content:""; position:absolute; inset:0;
+  background:rgba(0,0,0,0.45);
+}
+.place-hero > * { position:relative; z-index:1; }
+
+.back-btn {
+  position:absolute; top:20px; left:20px;
+  padding:8px 14px; background:rgba(0,0,0,0.4);
+  color:white; text-decoration:none;
+  border-radius:8px; font-size:18px;
+}
+.info-card {
+  border:none; border-radius:15px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+  background:var(--bs-body-bg);
+  color:var(--bs-body-color);
+}
+#map { height:350px; border-radius:12px; }
+body { background:var(--bs-body-bg); color:var(--bs-body-color); }
+</style>
+</head>
+<body>
+
+<header class="place-hero">
+<a href="javascript:history.back()" class="back-btn">
+<i class="bi bi-arrow-left"></i>
+</a>
+<div>
+<h1 class="display-4 fw-bold">Mannera Waterfall</h1>
+<p class="lead">A Peaceful Hidden Water Stream</p>
+</div>
+</header>
+
+<div class="container my-5">
+
+<div class="card info-card p-4 mb-4">
+<h3><i class="bi bi-info-circle-fill text-primary me-2"></i>About</h3>
+<p>
+Mannera Waterfall is a calm and lesser-known natural stream located in
+Pathanamthitta district. Surrounded by greenery and rural landscapes,
+it offers a quiet escape from crowded tourist locations.
+</p>
+</div>
+
+<div class="row g-4 align-items-start">
+<div class="col-md-6">
+<div class="card info-card p-4">
+<h4><i class="bi bi-stars text-success me-2"></i>Key Attractions</h4>
+<ul>
+<li>Natural rocky stream</li>
+<li>Ideal for short visits & photography</li>
+<li>Peaceful countryside surroundings</li>
+</ul>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="card info-card p-4">
+<h4><i class="bi bi-exclamation-circle-fill text-warning me-2"></i>Essential Info</h4>
+<ul>
+<li>Best time: Post-monsoon</li>
+<li>Limited facilities nearby</li>
+<li>Carry drinking water</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="card info-card p-4 my-4">
+<h4><i class="bi bi-shield-exclamation text-danger me-2"></i>Safety Tips</h4>
+<ul>
+<li>Rocks may be slippery</li>
+<li>Avoid heavy rain visits</li>
+<li>Do not litter</li>
+</ul>
+</div>
+
+<div class="card info-card p-4">
+<h4><i class="bi bi-map me-2 text-primary"></i>Location Map</h4>
+<div id="map"></div>
+</div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const savedTheme = localStorage.getItem("theme");
+if(savedTheme){document.documentElement.setAttribute("data-bs-theme", savedTheme);}
+
+const map = L.map('map').setView([9.2500, 76.8500], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+L.marker([9.2500, 76.8500]).addTo(map)
+.bindPopup("<b>Mannera Waterfall</b>").openPopup();
+</script>
+
+</body>
+</html>

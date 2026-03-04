@@ -1,0 +1,424 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabarimala Pilgrimage | Pathanamthitta Guide</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary: #e65100; /* Deep Saffron */
+            --card-bg: #ffffff;
+        }
+        * {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: #fffaf0; 
+    background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  transition: 0.3s ease;
+    }
+        /* Square back button */
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+
+  width: clamp(40px, 5vw, 50px);
+  height: clamp(40px, 5vw, 50px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: clamp(18px, 2vw, 24px);
+
+  color: white;
+  text-decoration: none;
+
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+
+  border-radius: 10px; /* Square with soft corners */
+  transition: 0.3s ease;
+}
+
+.back-btn:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: translateX(-3px);
+}
+        .details-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        /* .place-hero {
+  width: 100%;
+  height: 75vh;
+  position: absolute;
+  background:
+    url('https://cdn.99pandit.com/images/blogsimg/Sabarimala-Temple-1.webp');
+  background-size: cover;
+  object-fit: cover;
+  background-position:center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  animation: zoomHero 15s ease-in-out infinite alternate;
+} */
+@media (max-width: 992px) {
+  .place-hero {
+    height: 55vh;
+  }
+}
+
+@media (max-width: 576px) {
+  .place-hero {
+    height: 40vh;
+  }
+}
+
+.hero-overlay h1 {
+  color: white;
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 700;
+}
+
+.hero-overlay p {
+  color: white;
+  font-size: 1.2rem;
+}
+
+/* .hero {
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://cdn.99pandit.com/images/blogsimg/Sabarimala-Temple-1.webp');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        } */
+/* .place-hero {
+  position: relative;
+  height: 70vh;
+  min-height: 400px;
+  background:
+   
+    url('https://cdn.99pandit.com/images/blogsimg/Sabarimala-Temple-1.webp');
+  background-size: cover;
+  background-position: center;
+  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+} */
+.place-hero {
+  position: relative;
+  height: 70vh;
+  min-height: 400px;
+  background: url('https://cdn.99pandit.com/images/blogsimg/Sabarimala-Temple-1.webp');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+.place-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+
+.place-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .place-hero {
+    height: 50vh;
+  }
+}
+
+/* Back Button */
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 8px 14px;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(5px);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 18px;
+  transition: 0.3s ease;
+}
+
+.back-btn:hover {
+  background: rgba(0,0,0,0.6);
+  transform: translateX(-3px);
+}
+
+/* Cards */
+.info-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+ 
+
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  transition: 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+}
+
+#map {
+  height: 350px;
+  border-radius: 12px;
+}
+
+.virtual-btn {
+  background: linear-gradient(135deg, #ffc107, #ff9800);
+  border: none;
+  color: black;
+  padding: 10px 18px;
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
+.virtual-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+[data-bs-theme="dark"] .virtual-btn {
+  color: black;
+}
+
+[data-bs-theme="dark"] .back-btn {
+  background: rgba(255,255,255,0.15);
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- <nav>
+        <div class="logo" style="color:white; font-weight:bold; font-size:1.5rem;">Visit PTA</div>
+        <a href="index.html" style="color:white; text-decoration:none;">← Back to Home</a>
+    </nav> -->
+
+<header class="place-hero">
+
+  <a href="javascript:history.back()" class="back-btn">
+    <i class="bi bi-arrow-left"></i>
+  </a>
+
+  <div>
+    <h1 class="display-4 fw-bold">Sabarimala</h1>
+    <p class="lead">Sacred Pilgrimage Shrine of Lord Ayyappa</p>
+  </div>
+
+</header>
+<!--  -->
+<div class="container my-5">
+
+  <!-- About -->
+  <div class="card info-card p-4 mb-4">
+    <h3><i class="bi bi-info-circle-fill me-2 text-primary"></i>About</h3>
+    <p>
+      Sabarimala, located in the Periyar Tiger Reserve of Pathanamthitta district,
+      is one of the most significant pilgrimage centers in India. Dedicated to
+      Lord Ayyappa, the temple attracts millions of devotees every year,
+      especially during the Mandala-Makaravilakku season (November to January).
+      The temple is situated amidst dense forests and hills, offering a unique
+      spiritual and natural experience.
+    </p>
+  </div>
+
+  <div class="row g-4 align-items-start">
+
+    <!-- Highlights -->
+    <div class="col-md-6">
+      <div class="card info-card p-4">
+        <h4><i class="bi bi-stars text-success me-2"></i>Key Highlights</h4>
+        <ul>
+          <li>Annual Mandala & Makaravilakku festival</li>
+          <li>Sacred 18 holy steps (Pathinettam Padi)</li>
+          <li>Forest trekking experience</li>
+          <li>Millions of devotees annually</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Essential Info -->
+    <div class="col-md-6">
+      <div class="card info-card p-4">
+        <h4><i class="bi bi-exclamation-circle-fill text-danger me-2"></i>Essential Information</h4>
+        <ul>
+          <li>Virtual queue booking required during peak season</li>
+          <li>Online booking via official Devaswom website</li>
+          <li>Traditional dress code applies</li>
+          <li>Open during specific months only</li>
+        </ul>
+        <div class="alert alert-warning d-flex align-items-center mt-3">
+  <i class="bi bi-exclamation-triangle-fill me-2"></i>
+  Virtual Queue booking is mandatory during Mandala season.
+</div>
+
+        <div class="mt-3">
+  <a href="https://sabarimalaonline.org/"
+     target="_blank"
+     class="btn btn-warning fw-semibold">
+     <i class="bi bi-ticket-perforated-fill me-2"></i>
+     Book Virtual Queue
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <!-- How to Reach -->
+    <div class="col-md-6">
+      <div class="card info-card p-4 h-100">
+        <h4><i class="bi bi-geo-alt-fill text-primary me-2"></i>How to Reach</h4>
+        <p><strong>Nearest Town:</strong> Pamba (base camp)</p>
+        <p><strong>Railway:</strong> Chengannur (approx. 90 km)</p>
+        <p><strong>Airport:</strong> Trivandrum (approx. 170 km)</p>
+        <p>From Pamba, pilgrims trek about 5 km uphill to reach the temple.</p>
+      </div>
+    </div>
+
+    <!-- Trekking -->
+    <div class="col-md-6">
+      <div class="card info-card p-4 h-100">
+        <h4><i class="bi bi-map-fill text-warning me-2"></i>Trekking Route</h4>
+        <p>
+          The traditional trekking route starts from Pamba.
+          The 5 km trek passes through forest terrain and
+          concludes at the sacred 18 steps leading to the shrine.
+          Pilgrims usually observe 41 days of vratham before visit.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Nearby Facilities -->
+  <div class="card info-card p-4 my-4">
+    <h4><i class="bi bi-building text-success me-2"></i>Nearby Facilities</h4>
+    <ul>
+      <li>Medical centers available at Pamba</li>
+      <li>KSRTC transport services during season</li>
+      <li>Accommodation facilities at Pamba & Nilakkal</li>
+      <li>Parking & emergency services available</li>
+    </ul>
+  </div>
+
+  <!-- MAP -->
+  <div class="card info-card p-4">
+    <h4><i class="bi bi-map me-2 text-primary"></i>Location Map</h4>
+    <div id="map"></div>
+  </div>
+
+</div>
+
+    <!-- <div class="details-container">
+        <section class="about-section">
+            <h2>The Great Pilgrimage</h2>
+            <p>Sabarimala is situated atop a hill (914m above sea level) surrounded by 18 hills in the dense forests of the <strong>Periyar Tiger Reserve</strong>. Dedicated to Lord Ayyappa, a "Naishtika Brahmachari" (celibate), it is a symbol of communal harmony, welcoming people of all castes and creeds.</p>
+            <p>The temple is unique as it is only open during specific periods: the <strong>Mandala-Makaravilakku</strong> season (Nov-Jan), the first five days of every Malayalam month, and during major festivals like Vishu and Onam.</p>
+        </section>
+
+        <div class="info-grid">
+            <div class="info-box">
+                <h3>🕉️ Key Rituals</h3>
+                <ul>
+                    <li><span class="highlight">Irumudi Kettu:</span> The sacred travel kit carried on the head, containing offerings and ghee-filled coconuts.</li>
+                    <li><span class="highlight">Pathinettampadi:</span> The 18 gold-plated steps. Only those with the Irumudi can ascend these steps.</li>
+                    <li><span class="highlight">Vavar Swamy:</span> A shrine dedicated to a Sufi saint, symbolizing religious unity.</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>🥾 Trekking Routes</h3>
+                <ul>
+                    <li><span class="highlight">Pamba Route (5km):</span> The most common route. A moderate trek from the base camp at Pamba river.</li>
+                    <li><span class="highlight">Erumeli Route (61km):</span> The traditional "Peruvazhi" forest trek through Azhutha and Karimala.</li>
+                    <li><span class="highlight">Pulmedu Route (12km):</span> A scenic forest trek from the Vandiperiyar side.</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>📋 Essential Info</h3>
+                <p><strong>Base Camp:</strong> Nilakkal (Parking) and Pamba (Trek start).</p>
+                <p><strong>Virtual Q:</strong> Mandatory online booking is required for Darshan.</p>
+                <p><strong>Dress Code:</strong> Traditional black, blue, or saffron dhotis are preferred.</p>
+                <a
+  href="https://sabarimalaonline.org"
+  target="_blank"
+  class="btn btn-warning rounded-pill px-4"
+>
+  <i class="bi bi-ticket-perforated"></i> Virtual Q Booking
+</a>
+
+            </div>
+        </div>
+
+        <div class="notice-box">
+            <strong>Important Note:</strong> As per centuries-old tradition, women in the age group of 10 to 50 years are restricted from entering the temple. Pilgrims are expected to observe a 41-day "Vratham" (fasting and penance) before the visit.
+        </div>
+
+        <section class="map-section">
+            <h2>Location on Map</h2>
+            <div id="map" style="height: 350px; border-radius: 15px; margin-top: 20px;"></div>
+        </section>
+    </div> -->
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+<script>
+const map = L.map('map').setView([9.4321, 77.0820], 13);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+L.marker([9.4321, 77.0820])
+  .addTo(map)
+  .bindPopup("<b>Sabarimala Temple</b>")
+  .openPopup();
+</script>
+<script>
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme) {
+  document.documentElement.setAttribute("data-bs-theme", savedTheme);
+}
+</script>
+
+</body>
+</html>

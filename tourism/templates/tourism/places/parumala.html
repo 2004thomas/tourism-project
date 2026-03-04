@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" data-bs-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parumala Church | Explore PTA</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<style>
+
+.place-hero {
+  position: relative;
+  height: 70vh;
+  min-height: 400px;
+  background: url("https://stappbldrprod.blob.core.windows.net/appbuilder/Parumala%20Church/gallery/1610ecb6-17e3-4764-98ff-5a9e9c70dc87.jpg");
+  background-size: cover;
+  background-position: center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:white;
+}
+
+.place-hero::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+}
+
+.place-hero > * {
+  position:relative;
+  z-index:1;
+}
+
+.back-btn {
+  position:absolute;
+  top:20px;
+  left:20px;
+  padding:8px 14px;
+  background:rgba(0,0,0,0.4);
+  color:white;
+  border-radius:8px;
+  text-decoration:none;
+  font-size:18px;
+}
+
+.info-card {
+  border:none;
+  border-radius:15px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+  background:var(--bs-body-bg);
+  color:var(--bs-body-color);
+  transition:0.3s ease;
+}
+
+#map {
+  height:350px;
+  border-radius:12px;
+}
+
+body {
+  background:var(--bs-body-bg);
+  color:var(--bs-body-color);
+  transition:0.3s ease;
+}
+
+</style>
+</head>
+<body>
+
+<header class="place-hero">
+
+  <a href="javascript:history.back()" class="back-btn">
+    <i class="bi bi-arrow-left"></i>
+  </a>
+
+  <div>
+    <h1 class="display-4 fw-bold">Parumala Church</h1>
+    <p class="lead">Sacred Pilgrimage Centre of Saint Geevarghese Mar Gregorios</p>
+  </div>
+
+</header>
+
+<div class="container my-5">
+
+<!-- About -->
+<div class="card info-card p-4 mb-4">
+  <h3><i class="bi bi-info-circle-fill text-primary me-2"></i>About Parumala Church</h3>
+  <p>
+    Parumala Church, officially known as St. Peter’s and St. Paul’s Orthodox Church,
+    is one of the most important pilgrimage centers of the Malankara Orthodox Syrian Church.
+    Located on the banks of River Pamba near Thiruvalla, it is the final resting place of
+    Saint Geevarghese Mar Gregorios (Parumala Thirumeni).
+  </p>
+  <p>
+    The church attracts thousands of devotees throughout the year, especially during
+    the annual feast held in November. The peaceful riverside setting adds to the
+    spiritual atmosphere of the place.
+  </p>
+</div>
+
+<div class="row g-4 align-items-start">
+
+  <!-- Spiritual Importance -->
+  <div class="col-md-6">
+    <div class="card info-card p-4">
+      <h4><i class="bi bi-stars text-warning me-2"></i>Spiritual Importance</h4>
+      <ul>
+        <li>Tomb of Saint Geevarghese Mar Gregorios</li>
+        <li>Major pilgrimage site for Orthodox Christians</li>
+        <li>Annual feast in November</li>
+        <li>Daily prayers and special services</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Architecture -->
+  <div class="col-md-6">
+    <div class="card info-card p-4">
+      <h4><i class="bi bi-building text-primary me-2"></i>Architecture & Features</h4>
+      <ul>
+        <li>Modern circular church structure</li>
+        <li>Beautiful altar and stained-glass interiors</li>
+        <li>Riverside landscape</li>
+        <li>Well-maintained prayer hall</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- How to Reach -->
+  <div class="col-md-6">
+    <div class="card info-card p-4">
+      <h4><i class="bi bi-geo-alt-fill text-danger me-2"></i>How to Reach</h4>
+      <p><strong>Nearest Town:</strong> Thiruvalla (approx. 10 km)</p>
+      <p><strong>Railway Station:</strong> Thiruvalla Railway Station</p>
+      <p><strong>Airport:</strong> Cochin International Airport (approx. 110 km)</p>
+      <p>Well connected by road with regular bus services.</p>
+    </div>
+  </div>
+
+  <!-- Essential Info -->
+  <div class="col-md-6">
+    <div class="card info-card p-4">
+      <h4><i class="bi bi-exclamation-circle-fill text-warning me-2"></i>Essential Information</h4>
+      <ul>
+        <li>Open daily for visitors and prayer</li>
+        <li>Modest dress recommended</li>
+        <li>Peak crowd during November feast</li>
+        <li>Photography may be restricted inside</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- Feast & Pilgrimage -->
+<div class="card info-card p-4 my-4">
+  <h4><i class="bi bi-calendar-event text-primary me-2"></i>Annual Feast</h4>
+  <p>
+    The annual feast of Saint Geevarghese Mar Gregorios is celebrated
+    in the first week of November. Devotees from across Kerala and
+    outside the state participate in the special prayers and processions.
+  </p>
+</div>
+
+<!-- Nearby Facilities -->
+<div class="card info-card p-4 mb-4">
+  <h4><i class="bi bi-building text-success me-2"></i>Nearby Facilities</h4>
+  <ul>
+    <li>Hotels and lodges in Thiruvalla town</li>
+    <li>Restaurants and bakeries nearby</li>
+    <li>Petrol pumps within 5–10 km radius</li>
+    <li>Hospitals in Thiruvalla</li>
+  </ul>
+</div>
+
+<!-- Visitor Guidelines -->
+<div class="card info-card p-4 mb-4">
+  <h4><i class="bi bi-shield-exclamation text-danger me-2"></i>Visitor Guidelines</h4>
+  <ul>
+    <li>Maintain silence inside prayer hall</li>
+    <li>Respect religious customs</li>
+    <li>Follow instructions during feast days</li>
+    <li>Avoid crowding near sacred tomb area</li>
+  </ul>
+</div>
+
+<!-- Map -->
+<div class="card info-card p-4">
+  <h4><i class="bi bi-map me-2 text-primary"></i>Location Map</h4>
+  <div id="map"></div>
+</div>
+
+</div>
+
+<!-- Leaflet -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme) {
+  document.documentElement.setAttribute("data-bs-theme", savedTheme);
+}
+
+const map = L.map('map').setView([9.3256, 76.7065], 14);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+L.marker([9.3256, 76.7065])
+  .addTo(map)
+  .bindPopup("<b>Parumala Church</b>")
+  .openPopup();
+</script>
+
+</body>
+</html>

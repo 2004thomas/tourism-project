@@ -1,0 +1,238 @@
+
+
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" data-bs-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chengara Viewpoint | Explore PTA</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<style>
+
+/* Hero Section */
+.place-hero {
+  position: relative;
+  height: 70vh;
+  min-height: 400px;
+  background: url("https://tripinic.com/wp-content/uploads/2023/04/Chengara-View-Point-jpg.webp");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+.place-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+
+.place-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Back Button */
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 8px 14px;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(5px);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 18px;
+  transition: 0.3s ease;
+}
+
+.back-btn:hover {
+  background: rgba(0,0,0,0.6);
+  transform: translateX(-3px);
+}
+
+/* Cards */
+.info-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  transition: 0.3s ease;
+}
+
+#map {
+  height: 350px;
+  border-radius: 12px;
+}
+
+body {
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  transition: 0.3s ease;
+}
+
+</style>
+</head>
+<body>
+
+<header class="place-hero">
+
+  <a href="javascript:history.back()" class="back-btn">
+    <i class="bi bi-arrow-left"></i>
+  </a>
+
+  <div>
+    <h1 class="display-4 fw-bold">Chengara Viewpoint</h1>
+    <p class="lead">Panoramic Hilltop Views in Pathanamthitta</p>
+  </div>
+
+</header>
+
+<div class="container my-5">
+
+  <!-- About -->
+  <div class="card info-card p-4 mb-4">
+    <h3><i class="bi bi-info-circle-fill text-primary me-2"></i>About Chengara Viewpoint</h3>
+    <p>
+      Chengara Viewpoint is a scenic hilltop location offering expansive
+      panoramic views of valleys, plantations, and distant hills in
+      Pathanamthitta district. Known for its calm surroundings and refreshing
+      breeze, the viewpoint is ideal for short trips, photography, and peaceful
+      evening visits. It remains relatively less crowded compared to major
+      tourist destinations, making it perfect for those seeking quiet nature.
+    </p>
+  </div>
+
+  <div class="row g-4 align-items-start">
+
+    <!-- Key Attractions -->
+    <div class="col-md-6">
+      <div class="card info-card p-4">
+        <h4><i class="bi bi-stars text-success me-2"></i>Key Attractions</h4>
+        <ul>
+          <li>Wide-angle valley views</li>
+          <li>Beautiful sunrise and sunset scenery</li>
+          <li>Cool hill breeze</li>
+          <li>Photography-friendly landscape</li>
+          <li>Natural greenery and plantations</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Essential Info -->
+    <div class="col-md-6">
+      <div class="card info-card p-4">
+        <h4><i class="bi bi-exclamation-circle-fill text-warning me-2"></i>Essential Information</h4>
+        <ul>
+          <li>No major commercial facilities at the top</li>
+          <li>Best visited during early morning or late evening</li>
+          <li>Road access may include narrow village routes</li>
+          <li>Carry water and basic necessities</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- How to Reach -->
+    <div class="col-md-6">
+      <div class="card info-card p-4">
+        <h4><i class="bi bi-geo-alt-fill text-primary me-2"></i>How to Reach</h4>
+        <p><strong>Nearest Town:</strong> Pathanamthitta</p>
+        <p>Accessible by private vehicles and two-wheelers.</p>
+        <p>Some stretches may be steep; careful driving recommended.</p>
+      </div>
+    </div>
+
+    <!-- Walking / Exploration -->
+    <div class="col-md-6">
+      <div class="card info-card p-4">
+        <h4><i class="bi bi-map-fill text-success me-2"></i>Walking & Exploration</h4>
+        <p>
+          A short walk may be required from the parking spot to reach
+          the main viewing area. The terrain includes uneven rocky patches,
+          so appropriate footwear is advisable.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Entry Details -->
+  <div class="card info-card p-4 my-4">
+    <h4><i class="bi bi-ticket-perforated-fill text-primary me-2"></i>Entry & Access</h4>
+    <p>
+      There is generally no entry fee. However, visitors should respect
+      local community guidelines and avoid disturbing agricultural lands
+      or private property.
+    </p>
+  </div>
+
+  <!-- Safety Tips -->
+  <div class="card info-card p-4 mb-4">
+    <h4><i class="bi bi-shield-exclamation text-danger me-2"></i>Safety Tips</h4>
+    <ul>
+      <li>Avoid standing too close to steep edges</li>
+      <li>Be cautious during monsoon due to slippery ground</li>
+      <li>Do not litter; preserve the natural environment</li>
+      <li>Visit during daylight hours for safety</li>
+      <li>Travel in groups during late evenings</li>
+    </ul>
+  </div>
+
+  <!-- Nearby Facilities -->
+  <div class="card info-card p-4 mb-4">
+    <h4><i class="bi bi-building text-success me-2"></i>Nearby Facilities</h4>
+    <ul>
+      <li>Restaurants and shops in nearby towns</li>
+      <li>Petrol pumps within short driving distance</li>
+      <li>Hospitals and medical facilities in Pathanamthitta</li>
+    </ul>
+  </div>
+
+  <!-- Map -->
+  <div class="card info-card p-4">
+    <h4><i class="bi bi-map me-2 text-primary"></i>Location Map</h4>
+    <div id="map"></div>
+  </div>
+
+</div>
+
+<!-- Leaflet -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme) {
+  document.documentElement.setAttribute("data-bs-theme", savedTheme);
+}
+
+const map = L.map('map').setView([9.2605, 76.8150], 13);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+L.marker([9.2605, 76.8150])
+  .addTo(map)
+  .bindPopup("<b>Chengara Viewpoint</b>")
+  .openPopup();
+</script>
+
+</body>
+</html>
