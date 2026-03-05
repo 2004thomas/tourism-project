@@ -2,7 +2,7 @@
     --bg-color: #f0f2f5;
     --text-color: #333;
     --card-bg: #ffffff;
-    --primary: #37ee127c;
+    --primary: #065f46;
     --brand-color: #2c72b8;
     --bd-color:#4d7aa7;
 }
@@ -68,7 +68,7 @@ section p {
 
 /* DARK MODE */
 [data-bs-theme="dark"] .glass-nav {
-  background: rgba(0, 0, 0, 0.5);
+  background: #22c55e;
   backdrop-filter: blur(10px);
 }
 

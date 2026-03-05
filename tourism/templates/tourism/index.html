@@ -10,15 +10,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{% static 'tourism/css/style.css' %}">
-    <!-- <style>
-        .dest-img{
-            height: 50vh;
-            object-fit: cover;
-            background-size: cover;
-            background-position:center;
-            background-repeat: no-repeat;
-        }
-    </style> -->
+    <style>
+      .modal-body{
+        max-height:70vh;
+        overflow-y:auto;
+      }
+      .card{
+        border:none;
+        border-radius:12px;
+      }
+      .card:hover{
+        transform:translateY(-3px);
+        transition:0.3s;
+      }
+      </style>
 </head>
 <body>
 
@@ -49,13 +54,6 @@
           <a class="nav-link" href="#tags">
             <i class="bi bi-pin-map"></i>Where To
           </a>
-          <!-- <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="places/sabarimala.html">Sabarimala</a></li>
-            <li><a class="dropdown-item" href="places/gavi.html">Gavi</a></li>
-            <li><a class="dropdown-item" href="places/konni.html">Konni & Adavi</a></li>
-            <li><a class="dropdown-item" href="places/aranmula.html">Aranmula</a></li>
-            <li><a class="dropdown-item" href="places/perunthenaruvi.html">Perunthenaruvi</a></li>
-          </ul> -->
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
@@ -74,8 +72,10 @@
           </ul>
         </li>
          <li class="nav-item">
-          <a class="nav-link" href="#"><i class="bi bi-chat-quote-fill"></i></a>
-        </li>
+    <a class="nav-link" data-bs-toggle="modal" data-bs-target="#allReviewsModal">
+        <i class="bi bi-chat-square-text"> Reviews</i> 
+    </a>
+</li>
         <li class="nav-item d-flex align-items-center ms-3">
   <button id="themeToggle" class="btn btn-sm border-0">
     <i class="bi bi-moon-fill"></i>
@@ -100,16 +100,16 @@
         >
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <!-- <img src="" class="d-block w-100 dest-img" alt="..."> -->
+      
        <div class="dest-img" style="background-image: url('https://www.keralatourism.org/uploads/sabarimala/desktop/ezhunnellathu-to-saramkuthi-2-20241007140950219498.webp');"></div>
         
     </div>
     <div class="carousel-item">
-      <!-- <img src="" class="d-block w-100 dest-img" alt="..."> -->
+      
        <div class="dest-img" style="background-image: url('https://www.gavikakkionline.com/uploads/photos/59f30b08ec931-3f4834a6e864a695426cedfa805cea70-1200x_.jpg');"></div>
     </div>
     <div class="carousel-item">
-      <!-- <img src="?w=1200&h=-1&s=1" class="d-block w-100 dest-img" alt="..."> -->
+      
        <div class="dest-img" style="background-image: url('https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/6f/66/9c/caption.jpg');"></div>
     </div>
     <div class="carousel-item">
@@ -128,20 +128,11 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div>
-
-  
-
  <div class="hero-overlay"></div>
-
-  <!-- Hero Content -->
   <div class="hero-content container">
     <span class="hero-tag animate fade-up delay-1">
         <i class="bi bi-signpost-2-fill"></i>
         LET'S GO
-        <!-- <a href="#cardNature" class="btn mt-3">
-  Discover Places<i class="bi bi-caret-right"></i>
-</a> -->
-
     </span>
     <h1 class="hero-title animate fade-up delay-2">
       EXPLORE YOUR <br>
@@ -245,235 +236,11 @@
   </div>
 </div>
 {% endfor %}
-
-      <!-- CARD -->
-       
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
      
   </div>
  
 </main>
-
-
-
-    <!-- <main class="gallery" id="destination-gallery">
-
-      <div class="card h-100 shadow-sm">
-        <img src="assets/images/gavi.jpg" class="card-img-top">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Gavi</h5>
-          <p class="card-text">Eco-tourism hotspot inside Periyar reserve.</p>
-
-          <div class="mt-auto d-flex justify-content-between">
-            <a href="places/gavi.html" class="btn btn-sm btn-primary">
-              Show Details
-            </a>
-            <a href="https://www.google.com/maps?q=9.4385,77.1654"
-               target="_blank"
-               class="btn btn-sm btn-outline-secondary">
-              Show on Map
-            </a>
-          </div>
-        </div>
-      </div>
-    </div> 
-
-
-        <div class="card nature" data-lat="9.4385" data-lng="77.1654">
-            <img src="https://www.karmictourism.com/wp-content/uploads/2022/01/Gavi-Kerala-Photo-10.jpg" alt="Gavi" class="dest-img">
-            <h3>Gavi</h3>
-            <p>Eco-tourism center nestled in Periyar Tiger Reserve. Famous for trekking and wildlife.</p>
-      
-            <button>
-                <a href="gavi.html" class="btn btn-sm btn-primary">
-              Show Details
-            </a>
-            </button>
-            <a href="https://www.google.com/maps/place/Gavi,+Kerala+685533/@9.4375036,77.1402451,14z/data=!3m1!4b1!4m6!3m5!1s0x3b0658f762eea579:0x343b8a48f3b3c7de!8m2!3d9.4358536!4d77.1657716!16s%2Fm%2F08059h6?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D"
-               target="_blank"
-               class="btn btn-sm btn-outline-secondary">
-              <button id="modal-map-btn">Show on Map</button></a>
-            </a>
-    </div>
-
-        <div class="card heritage" data-lat="9.3000" data-lng="76.6833">
-            <img src="https://www.keralatourism.org/_next/image/?url=https:%2F%2Fik.imagekit.io%2Fxsnlqng4k%2FYoutubeImages%2Ftr:w-1920%2Ch-1080%2Fvi%2FTwqwGdNel8c%2Fmaxresdefault.jpg&w=1920&q=75" alt="ara" class="dest-img">
-            <h3>Aranmula</h3>
-            <p>Cultural village home to the Aranmula Mirror and the famous snake boat race.</p>
-            <button>
-                <a href="aran.html">Show details</button></a>
-        <a href="https://www.google.com/maps/place/Aranmula,+Kerala/@9.3284523,76.6776229,15z/data=!3m1!4b1!4m6!3m5!1s0x3b063cfc4923b5a7:0x720304f454797c45!8m2!3d9.3264965!4d76.6839905!16zL20vMDdoenBx?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D" target="_blank">
-        <button id="modal-map-btn">Show on Map</button></a>
-        </div>
-
-        <div class="card hidden" data-lat="9.4167" data-lng="76.7167">
-            <img src="https://tse3.mm.bing.net/th/id/OIP.hxxkheW3U8cgJBexglVFsAHaEK?pid=Api&P=0&h=220" alt="Orakkanpara" class="dest-img">
-            <h3>Orakkanpara</h3>
-            <p>A serene, lesser-known waterfall hidden in the hills of Mallappally.</p><button>
-<a href="ora.html">Show details</button></a>
-<a href="https://www.google.com/maps/place/Orakkanpara+Waterfalls+(The+Little+Paradise)+%7C+Kottangal%2FChunkappara/@9.4576902,76.7008792,11.63z/data=!4m6!3m5!1s0x3b0639b5a1065867:0x5732a257edfea291!8m2!3d9.4608937!4d76.7408203!16s%2Fg%2F11g0qn37s3?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D" target="_blank">
-        <button id="modal-map-btn">Show on Map</button></a>
-        </div>
-
-        <div class="card nature" data-lat="9.2319" data-lng="76.8481">
-            <img src="https://www.keralatourism.org/images/eco-tourism/trekking_thumb/jungle-safari/Konni%20forest_16072018175921.jpg" alt="Konni" class="dest-img">
-            <h3>Konni & Adavi</h3>
-            <p>Elephant training center and coracle rafting (bowl boat) in the Kallar River.</p>
-<button>
-<a href="konni.html">Show details</button></a>
-<a href="https://www.google.com/maps/place/Adavi+Eco+Tourism+Thannithodu/@9.245018,76.9198121,17z/data=!3m1!4b1!4m6!3m5!1s0x3b066bd70bcfd4d7:0x97e9b8833e779d30!8m2!3d9.2450127!4d76.922387!16s%2Fg%2F1s04gstz4?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D" target="_blank">
-        <button id="modal-map-btn">Show on Map</button></a>
-
-        </div>
-
-        <div class="card hidden" data-lat="9.2319" data-lng="76.8481">
-            <img src="https://img-mm.manoramaonline.com/content/dam/mm/mo/district-news/pathanamthitta/images/2023/1/16/pathanamthitta-needs-facilities-at-manneera-meenmutty-water-falls.jpg" alt="card" class="dest-img">
-            <h3>Manneera Waterfall</h3>
-            <p>A beautiful hidden cascade near Seethathodu, perfect for a peaceful dip.</p>
-<button>
-<a href="man.html">Show details</button></a>
-<a href="https://www.google.com/maps/place/Manneera+Waterfalls/@9.2328857,76.9099694,14.24z/data=!4m6!3m5!1s0x3b066961373e6557:0x4bd30e2cd8a8dc13!8m2!3d9.2328207!4d76.9316514!16s%2Fg%2F11f1zlt8r6?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D" target="_blank">
-        <button id="modal-map-btn">Show on Map</button></a>
-
-        </div>
-<div class="card pilgrimage" data-lat="9.4408" data-lng="77.0819">
-    <img src="https://tse3.mm.bing.net/th/id/OIP.ducmykKd2JMxAJIAxrFm8QHaE8?pid=Api" alt="Sabarimala" class="dest-img">
-    <h3>Sabarimala Temple</h3>
-    <p>The world-famous hill shrine of Lord Ayyappa, located deep within the Periyar Tiger Reserve.</p>
-<button>
-<a href="sab.html">Show details</button></a>
-<a href="https://www.google.com/maps/place/Sabarimala,+Kerala/@9.4224745,77.0503804,14z/data=!3m1!4b1!4m6!3m5!1s0x3b065b984dd41c11:0x953037d850a3006e!8m2!3d9.4320761!4d77.0820015!16zL20vMDR0Ym5t?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D" target="_blank">
-        <button id="modal-map-btn">Show on Map</button></a>
-</div>
-
-<div class="card pilgrimage heritage" data-lat="9.3315" data-lng="76.6791">
-    <img src="https://www.dtpcpathanamthitta.com/uploads/picture_gallery/gallery_images/aranmula-parthasarathy-temple-pathanamthitta-8-20230508161631579071.webp" alt="pil" class="dest-img">
-    <h3>Aranmula Parthasarathy Temple</h3>
-    <p>An ancient temple dedicated to Lord Krishna, famous for its Valla Sadya and architectural beauty.</p>
-<button>
-<a href="ar.html">Show details</button></a>
-<a href="https://www.google.com/maps/place/Aranmula+Parthasarathy+Temple/@9.3280428,76.6852532,17z/data=!3m1!4b1!4m6!3m5!1s0x3b063da82eaccbbb:0xdca21764bde8c667!8m2!3d9.3280375!4d76.6878281!16s%2Fm%2F0269j7y?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D" target="_blank">
-        <button id="modal-map-btn">Show on Map</button></a>
-
-</div>
-
-<div class="card pilgrimage" data-lat="9.3396" data-lng="76.5614">
-    <img src="https://religionworld.s3.amazonaws.com/uploads/2017/12/parumala.jpg" alt="Parumala" class="dest-img">
-    <h3>Parumala Church</h3>
-    <p>The tomb of Saint Gregorios of Parumala; it is a major center of pilgrimage for Christians worldwide.</p>
-<button>
-<a href="par.html">Show details</button></a>
-<a href="https://www.google.com/maps/place/Parumala+Church/@9.3247767,76.5342136,17z/data=!3m1!4b1!4m6!3m5!1s0x3b062184bd06ab41:0x352fbc4d58a0cca4!8m2!3d9.3247714!4d76.5367885!16s%2Fm%2F0jt1gwl?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D" target="_blank">
-        <button id="modal-map-btn">Show on Map</button></a>
-
-</div>
-
-<div class="card pilgrimage" data-lat="9.3941" data-lng="76.9942">
-    <img src="https://alchetron.com/cdn/nilakkal-8f795146-516e-422a-851d-34b16af6548-resize-750.jpeg" alt="Nilakkal" class="dest-img">
-    <h3>Nilakkal Mahadeva Temple</h3>
-    <p>An important 'Idathavalam' (halt points) for Sabarimala pilgrims and one of the oldest Shiva temples.</p>
-<button>
-<a href="nil.html">Show details</button></a>
-<a href="https://www.google.com/maps/place/Nilakkal+Sri+Mahadeva+Temple/@9.3895733,77.0098261,17z/data=!3m1!4b1!4m6!3m5!1s0x3b065caae2fcf1d9:0x7d96c71a6d59ce5f!8m2!3d9.389568!4d77.012401!16s%2Fg%2F1tgbz5r_?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D" target="_blank">
-        <button id="modal-map-btn">Show on Map</button></a>
-
-
-</div>
-
-<div class="card pilgrimage heritage" data-lat="9.2275" data-lng="76.6739">
-    <img src="https://lh5.googleusercontent.com/p/AF1QipPhff61UagaYEcCgDPPBTDdIdCvcX0wP3y-0m9K=w1080-k-no" alt="Pandalam" class="dest-img">
-    <h3>Pandalam Valiyakoikkal Temple</h3>
-    <p>The palace where Lord Ayyappa is believed to have grown up. The holy ornaments (Thiruvabharanam) are kept here.</p>
-<button>
-<a href="pa.html">Show details</button></a>
-<a href="https://www.google.com/maps/place/Pandalam+Valiya+Koyikkal+Sri+Dharma+Sastha+Temple/@9.2339382,76.6723964,17z/data=!3m1!4b1!4m6!3m5!1s0x3b061710ae011321:0xa063c27ff6f52db5!8m2!3d9.2339329!4d76.6749713!16s%2Fm%2F06w3v4r?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D" target="_blank">
-    <button id="modal-map-btn">Show on Map</button></a>
-
-</div>
-<div class="card hidden" data-lat="9.2319" data-lng="76.8481">
-            <img src="https://www.hipathanamthitta.in/tourism/charalkunnuhillstation/8.jpg" alt="card" class="dest-img">
-            <h3>Charalkunnu Hill Station</h3>
-            <p>Charalkunnu Hill Station is one of Pathanamthitta’s best place for refreshing, breezy climate and serves as a peaceful retreat from the bustling pilgrim towns below.</p>
-<button>
-<a href="cha.html">Show details</button></a>
-<a href="https://www.google.com/maps/search/Charalkunnu+Hill+Station/@9.3711411,76.6953704,17.07z?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D" target="_blank">
-        <button id="modal-map-btn">Show on Map</button></a>
-
-        </div>
-<div class="card hidden" data-lat="9.2319" data-lng="76.8481">
-            <img src="https://www.keralatourism.org/_next/image/?url=http:%2F%2F127.0.0.1%2Fktadmin%2Fimg%2Fpages%2Flarge-desktop%2Fanjumalappara-1748509396_38f232b67a171b9fa85d.webp&w=3840&q=75" alt="card" class="dest-img">
-            <h3>
-Anjumala Para</h3>
-            <p>Also known as "Pathanamthitta’s Meesapulimala," it is a hidden gem that offers misty landscapes and a serene escape from urban life.
-</p>
-<button>
-<a href="anj.html">Show details</button></a>
-<a href="https://www.google.com/maps/place/ANJUMALA+PARA/@9.1082222,76.8097108,17z/data=!3m1!4b1!4m6!3m5!1s0x3b060dee77d33bd1:0xc7cf2f0b3a137621!8m2!3d9.1082169!4d76.8122857!16s%2Fg%2F11hzsmbgmn?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D" target="_blank">
-        <button id="modal-map-btn">Show on Map</button></a>
-
-        </div>
-<div class="card hidden" data-lat="9.2319" data-lng="76.8481">
-            <img src="https://i.ytimg.com/vi/bxYNBw1uj9A/maxresdefault.jpg" alt="card" class="dest-img">
-            <h3>
-Chuttippara</h3>
-            <p>Chuttippara is a majestic rocky outcrop rising about 200-300 feet right in the heart of Pathanamthitta town.
-</p>
-<button>
-<a href="chu.html">Show details</button></a>
-<a href="https://www.google.com/maps/place/Chuttipara,+Valanchuzhy,+Pathanamthitta,+Kerala+689645/@9.25867,76.7825321,15z/data=!3m1!4b1!4m6!3m5!1s0x3b06151b1cd52f41:0x55511067e0112b0!8m2!3d9.2605041!4d76.7927981!16s%2Fg%2F12332szvb?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D" target="_blank">
-        <button id="modal-map-btn">Show on Map</button></a>
-
-        </div>
-
-<div class="card hidden" data-lat="9.2319" data-lng="76.8481">
-            <img src="https://tse3.mm.bing.net/th/id/OIP.cMlMIZVEcq9VWp8DsLuPvAHaCx?pid=Api&P=0&h=220" alt="card" class="dest-img">
-            <h3>
-Chengara Viewpoint</h3>
-            <p>Chengara Viewpoint (also known as Chengara Mist & Sunrise Viewpoint) is often called the "Munnar of Pathanamthitta."
-</p>
-<button>
-<a href="chen.html">Show details</button></a>
-<a href="https://www.google.com/maps/search/Chengara+Viewpoint/@9.2782313,76.8507632,15z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D">
-        <button id="modal-map-btn">Show on Map</button></a>
-
-        </div>
-<div class="card hidden" data-lat="9.2319" data-lng="76.8481">
-            <img src="https://media-cdn.tripadvisor.com/media/photo-s/11/17/fb/82/perunthenaruvi-waterfall.jpg" alt="card" class="dest-img">
-            <h3>
-Perunthenaruvi Waterfalls</h3>
-            <p>Perunthenaruvi Waterfalls (literally "The Great Honey Stream") is one of the most spectacular natural attractions in Pathanamthitta.
-</p>
-<button>
-<a href="per.html">Show details</button></a>
-<a href="https://www.google.com/maps/place/Perunthenaruvi+Waterfalls/@9.4127987,76.8731786,17z/data=!3m1!4b1!4m6!3m5!1s0x3b0646e149d72d2f:0xe52e159e8b9c109e!8m2!3d9.4127934!4d76.8757535!16s%2Fm%2F05mr51_?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D">
-        <button id="modal-map-btn">Show on Map</button></a>
-
-        </div>
-
-
-    </main> -->
-
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
@@ -491,19 +258,59 @@ document.getElementById("filterToggle").addEventListener("click", function() {
 
 });
 </script>
-<!-- 
-<script>
-    const themeToggle = document.getElementById("themeToggle");
 
-themeToggle.addEventListener("click", () => {
-  const currentTheme = document.documentElement.getAttribute("data-bs-theme");
-  const newTheme = currentTheme === "dark" ? "light" : "dark";
+<div class="modal fade" id="allReviewsModal" tabindex="-1">
+<div class="modal-dialog modal-lg modal-dialog-scrollable">
 
-  document.documentElement.setAttribute("data-bs-theme", newTheme);
-  localStorage.setItem("theme", newTheme);
-});
+<div class="modal-content">
 
-</script> -->
+<div class="modal-header">
+<h5 class="modal-title"><i class="bi bi-star-half"></i> Popular Reviews</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
 
+<div class="modal-body">
+
+{% for review in reviews %}
+
+<div class="card mb-3 shadow-sm">
+
+<div class="card-body">
+
+<h6 class="fw-bold">
+📍 {{ review.place.name }}
+</h6>
+
+<p class="mb-2">
+{{ review.review_text }}
+</p>
+
+<div class="d-flex justify-content-between">
+
+<span class="text-warning">
+⭐ {{ review.rating }}/5
+</span>
+
+<small class="text-muted">
+by {{ review.user.username }}
+</small>
+
+</div>
+
+</div>
+
+</div>
+
+{% empty %}
+
+<p>No reviews yet.</p>
+
+{% endfor %}
+
+</div>
+
+</div>
+</div>
+</div>
 </body>
 </html>

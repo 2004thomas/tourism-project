@@ -3,97 +3,143 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<style>
+    .place-actions{
+display:flex;
+gap:15px;
+margin:20px 0;
+}
+
+.action-btn{
+padding:10px 18px;
+background:#0d6efd;
+color:white;
+border-radius:8px;
+text-decoration:none;
+font-weight:500;
+}
+
+.action-btn:hover{
+background:#084298;
+}
+/* Modal background */
+
+.custom-modal{
+
+display:none;
+position:fixed;
+z-index:1000;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+backdrop-filter: blur(5px);
+overflow:auto;
+
+}
+
+
+/* modal box */
+
+.modal-content-box{
+
+background:white;
+margin:5% auto;
+padding:25px;
+width:90%;
+max-width:900px;
+border-radius:12px;
+
+}
+
+
+/* close button */
+
+.close-btn{
+
+float:right;
+font-size:22px;
+cursor:pointer;
+
+}
+
+
+/* gallery grid */
+
+.gallery-grid{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin-top:20px;
+
+}
+
+.gallery-img{
+
+width:100%;
+border-radius:10px;
+height:250px;
+object-fit:cover;
+transition:0.3s;
+}
+
+.gallery-img:hover{
+    transform:scale(1.05);
+}
+
+/* reviews */
+
+.review-box{
+
+background:#f7f7f7;
+padding:15px;
+margin-top:15px;
+border-radius:8px;
+
+}
+
+.rating{
+
+color:gold;
+
+}
+</style>
 </head>
 <body>
-<div class="hero text-white text-center d-flex align-items-center justify-content-center" style="background-image:url('{{place.hero_image}}'); height:60vh; background-size:cover; background-position:center;">
+<div class="hero text-white text-center d-flex align-items-center justify-content-center" style="background-image:url('{{place.hero_image}}'); height:75vh; background-size:cover; background-position:center;">
+    
     <div>
         <h1 class="display-4">{{place.name}}</h1>
         <p class="lead">{{place.tagline}}</p>
     </div>
 </div>
-
 <div class="container mt-3">
     <a href="{% url 'home' %}" class="btn btn-outline-secondary">
         Back to Home
     </a>
 </div>
+
 <!--  -->
-<div class="d-flex gap-4 my-4">
 
-    <!-- Gallery Icon -->
-    <a href="#gallery-section" class="text-decoration-none text-dark">
-        <div class="text-center">
-            <i class="bi bi-images fs-3"></i>
-            <p class="mb-0">Gallery</p>
-        </div>
-    </a>
-    <hr>
-
-<section id="gallery-section" class="my-5">
-    <h4 class="mb-4">📷 Gallery</h4>
-
-    {% if photos %}
-        <div class="row g-3">
-            {% for photo in photos %}
-                <div class="col-md-3 col-6">
-                    <img src="{{ photo.image.url }}" 
-                         class="img-fluid rounded shadow-sm">
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p class="text-muted">No photos available yet.</p>
-    {% endif %}
-</section>
-
-    <!-- Review Icon -->
-    <a href="#review-section" class="text-decoration-none text-dark">
-        <div class="text-center">
-            <i class="bi bi-chat-dots fs-3"></i>
-            <p class="mb-0">Reviews</p>
-        </div>
-    </a>
-
-
-    <hr>
-
-<section id="review-section" class="my-5">
-    <h4 class="mb-4">📝 Reviews</h4>
-
-    {% if reviews %}
-        {% for review in reviews %}
-            <div class="card mb-3 shadow-sm">
-                <div class="card-body">
-                    <h6 class="card-title">
-                        {{ review.user.username }}
-                    </h6>
-                    <p class="card-text">
-                        {{ review.comment }}
-                    </p>
-                    <small class="text-muted">
-                        {{ review.created_at|date:"d M Y" }}
-                    </small>
-                </div>
-            </div>
-        {% endfor %}
-    {% else %}
-        <p class="text-muted">No reviews yet.</p>
-    {% endif %}
-</section>
 
 </div>
 
 
 <!--  -->
+{% if place.about %}
 <div class="container mt-4">
     <div class="card p-4 shadow-sm">
         <h4>About</h4>
         <p>{{place.about}}</p>
     </div>
 </div>
+{% endif %}
 
 <div class="container mt-4">
     <div class="row g-4">
+        {% if place.highlights %}
         <div class="col-md-6">
             <div class="card p-3 shadow-sm h-100">
                 <h5>Key Highlights</h5>
@@ -104,8 +150,48 @@
                 </ul>
             </div>
         </div>
+{% endif %}
 
+{% if place.trekking_info %}
+<div class="col-md-6">
+            <div class="card p-3 shadow-sm h-100">
+                <h5>Trekking Information</h5>
+                <ul>
+                    {% for item in place.trekking_info.splitlines %}
+                        <li>{{item}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+{% endif %}
 
+{% if place.safety_tips %}
+        <div class="col-md-6">
+            <div class="card p-3 shadow-sm h-100">
+                <h5>Safety Tips</h5>
+                <ul>
+                    {% for item in place.safety_tips.splitlines %}
+                        <li>{{item}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+{% endif %}
+
+{% if place.entry_booking %}
+<div class="col-md-6">
+            <div class="card p-3 shadow-sm h-100">
+                <h5>Entry & Booking</h5>
+                <ul>
+                    {% for item in place.entry_booking.splitlines %}
+                        <li>{{item}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+{% endif %}
+
+{% if place.essential_info %}
         <div class="col-md-6">
             <div class="card p-3 shadow-sm h-100">
                 <h5>Essential Information</h5>
@@ -116,7 +202,34 @@
                 </ul>
             </div>
         </div>
-    
+    {% endif %}
+
+    {% if place.how_to_reach %}
+        <div class="col-md-6">
+            <div class="card p-3 shadow-sm h-100">
+                <h5>How To Reach</h5>
+                <ul>
+                    {% for item in place.how_to_reach.splitlines %}
+                        <li>{{item}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+
+{% if place.nearby_facilities %}
+        <div class="col-md-6">
+            <div class="card p-3 shadow-sm h-100">
+                <h5>Nearby Facilities</h5>
+                <ul>
+                    {% for item in place.nearby_facilities.splitlines %}
+                        <li>{{item}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+
     </div>
 </div>
 
@@ -148,21 +261,124 @@
                 L.marker([lat,lng]).addTo(map);
             }
         });
-        // var map=L.map('map').setView(
-        //     [{{place.latitude}},{{place.longitude}}],13
-        // );
-
-        // L.titleLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        // {
-        //     attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
-        // L.marker([{{place.latitude}},{{place.longitude}}]).addTo(map).bindPopup("{{place.name}}").openPopup();
     </script>
 {% endif %}
+<div class="place-actions d-flex text-center align-items-center justify-content-center">
+
+<button class="btn btn-outline-dark" onclick="openGallery()">
+<i class="bi bi-image"></i> Gallery
+</button>
+
+<button class="btn btn-outline-primary" onclick="openReviews()">
+<i class="bi bi-star-fill"></i> Reviews
+</button>
+
+</div>
+
+<div id="galleryModal" class="custom-modal">
+
+<div class="modal-content-box">
+
+<span class="close-btn" onclick="closeGallery()">
+    <i class="bi bi-x-lg"></i>
+</span>
+
+<h3>{{place.name}} Gallery</h3>
+
+<div class="gallery-grid">
+
+{% for photo in photos %}
+
+<img src="{{photo.image.url}}" class="gallery-img">
+
+{% empty %}
+
+<p>No photos uploaded yet.</p>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+</div>
+
+<div id="reviewModal" class="custom-modal">
+
+<div class="modal-content-box">
+
+<span class="close-btn" onclick="closeReviews()">
+    <i class="bi bi-x-circle"></i>
+</span>
+
+<h3>{{place.name}} Reviews</h3>
+
+{% for review in reviews %}
+
+<div class="review-box">
+
+<strong>{{review.user.username}}</strong>
+
+<div class="rating">
+
+{% for i in "12345" %}
+
+{% if forloop.counter <= review.rating %}
+★
+{% else %}
+☆
+{% endif %}
+
+{% endfor %}
+
+</div>
+
+<p>{{review.review_text}}</p>
+
+</div>
+
+{% empty %}
+
+<p>No reviews yet.</p>
+
+{% endfor %}
+
+</div>
+
+</div>
 
 <!-- <p>latitude: {{place.latitude}}</p>
 <p>longitude: {{place.longitude}}</p> -->
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+
+function openGallery(){
+
+document.getElementById("galleryModal").style.display="block";
+
+}
+
+function closeGallery(){
+
+document.getElementById("galleryModal").style.display="none";
+
+}
+
+
+function openReviews(){
+
+document.getElementById("reviewModal").style.display="block";
+
+}
+
+function closeReviews(){
+
+document.getElementById("reviewModal").style.display="none";
+
+}
+
+</script>
 </body>
 </html>
