@@ -1,19 +1,6 @@
 from django import forms
 from .models import Review,Photo
 
-# class ReviewForm(forms.ModelForm):
-#     class Meta:
-#         model = Review
-#         fields = ['place', 'review_text']
-#         widgets = {
-#             'place': forms.Select(attrs={'class':'form-select'}),
-#             'review_text': forms.Textarea(attrs={'class':'form-control'}),
-            
-#         }
-
-# 'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
-
-
 
 
 
