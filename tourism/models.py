@@ -11,6 +11,7 @@ class Place(models.Model):
         ('hidden','Hidden')
     ]
 
+    category=models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     name = models.CharField(max_length=200,unique=True)
     hero_image=models.URLField(blank=True)
     tagline=models.CharField(max_length=300,blank=True)

@@ -1,11 +1,6 @@
 from django import forms
 from .models import Review,Photo
-
-
-
-
 class ReviewForm(forms.ModelForm):
-
     class Meta:
         model = Review
         fields = ['place', 'review_text', 'rating']
@@ -24,10 +19,7 @@ class ReviewForm(forms.ModelForm):
                 'max': 5
             })
         }
-
-
 class PhotoForm(forms.ModelForm):
-
     class Meta:
         model = Photo
         fields = ['place', 'image']

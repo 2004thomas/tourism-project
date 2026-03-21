@@ -1,5 +1,3 @@
-# from django.shortcuts import render
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -7,13 +5,14 @@ from django.contrib.auth import login, logout
 from .forms import ReviewForm,PhotoForm
 from .models import Review , Place, Photo
 from django.contrib import messages
-
-
 def home(request):
     places=Place.objects.all()
-    return render(request,'tourism/index.html',{'places':places})
+    reviews=Review.objects.filter(approved=True).select_related('place','user')
 
-
+    return render(request,'tourism/index.html',{
+        'places':places,
+        'reviews':reviews
+        })
 #Signup / Login page
 
 def signup_view(request):
@@ -32,7 +31,6 @@ def signup_view(request):
 
     return render(request, 'tourism/signup.html', {'form': form})
 
-
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -44,12 +42,9 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'tourism/login.html', {'form': form})
 
-
 def logout_view(request):
     logout(request)
     return redirect('home')
-
-#Profile
 
 @login_required
 def profile(request):
@@ -112,8 +107,6 @@ def place_detail(request, place_id):
     }
 
     return render(request, 'tourism/place_detail.html',context)
-
-
 def place_description(request,place_id):
     place=get_object_or_404(Place,id=place_id)
     return render(request,'place_description.html',{'place':place})

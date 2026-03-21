@@ -1,20 +1,8 @@
-// 1. Dark Mode Toggle
-// const toggleBtn = document.getElementById('theme-toggle');
-// toggleBtn.addEventListener('click', () => {
-//     const currentTheme = document.body.getAttribute('data-theme');
-//     if (currentTheme === 'dark') {
-//         document.body.removeAttribute('data-theme');
-//     } else {
-//         document.body.setAttribute('data-theme', 'dark');
-//     }
-// });
-
-
 
   const toggleBtn = document.getElementById("themeToggle");
   const htmlTag = document.documentElement;
 
-  // Load saved theme
+  // // Load saved theme
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme) {
     htmlTag.setAttribute("data-bs-theme", savedTheme);
@@ -37,104 +25,126 @@
         : '<i class="bi bi-sun-fill"></i>';
   }
 
+//   const filterButtons = document.querySelectorAll(".filter-btn");
+//   const cards = document.querySelectorAll(".place-card");
 
+//   filterButtons.forEach(button => {
+//     button.addEventListener("click", () => {
 
+//       // Remove active state
+//       filterButtons.forEach(btn => btn.classList.remove("active"));
+//       button.classList.add("active");
 
-// 2. Filter Logic
-// const filterButtons = document.querySelectorAll('.filter-btn');
-// const cards = document.querySelectorAll('.card');
+//       const filterValue = button.getAttribute("data-filter");
+
+//       cards.forEach(card => {
+//         if (filterValue === "all") {
+//           card.classList.remove("d-none");
+//         } else {
+//           if (card.classList.contains(filterValue)) {
+//             card.classList.remove("d-none");
+//           } else {
+//             card.classList.add("d-none");
+//           }
+//         }
+//       });
+
+//     });
+//   });
+
+// function filterPlaces(category){
+//   const cards=document.querySelectorAll(".place-card");
+//   cards.forEach(card=>{
+//     if(category==="all"){
+//       card.style.display="block";
+//     }
+//     else if(card.classList.contains(category)){
+//       card.style.display="block";
+//     }
+//     else{
+//       card.style.display="none";
+//     }
+//   });
+// }
 
 // filterButtons.forEach(button => {
-//     button.addEventListener('click', () => {
-//         // Remove active class from all buttons
-//         filterButtons.forEach(btn => btn.classList.remove('active'));
-//         button.classList.add('active');
+//   button.addEventListener("click", function() {
 
-//         const filterValue = button.getAttribute('data-filter');
+//     filterButtons.forEach(btn => btn.classList.remove("active"));
+//     this.classList.add("active");
 
-//         cards.forEach(card => {
-//             if (filterValue === 'all' || card.classList.contains(filterValue)) {
-//                 card.classList.remove('hide');
-//             } else {
-//                 card.classList.add('hide');
-//             }
-//         });
+//     const filterValue = this.getAttribute("data-filter");
+
+//     document.querySelectorAll(".place-card").forEach(card => {
+//       if (filterValue === "all") {
+//         card.classList.remove("d-none");
+//       } else {
+//         card.classList.toggle("d-none", !card.classList.contains(filterValue));
+//       }
 //     });
+
+//   });
 // });
 
 
+// THEME LOAD (runs on every page)
+// document.addEventListener("DOMContentLoaded", function () {
 
-  const filterButtons = document.querySelectorAll(".filter-btn");
-  const cards = document.querySelectorAll(".place-card");
+//     const savedTheme = localStorage.getItem("theme");
 
-  filterButtons.forEach(button => {
-    button.addEventListener("click", () => {
+//     if (savedTheme === "dark") {
+//         document.body.classList.add("dark-mode");
+//     }
 
-      // Remove active state
-      filterButtons.forEach(btn => btn.classList.remove("active"));
-      button.classList.add("active");
-
-      const filterValue = button.getAttribute("data-filter");
-
-      cards.forEach(card => {
-        if (filterValue === "all") {
-          card.classList.remove("d-none");
-        } else {
-          if (card.classList.contains(filterValue)) {
-            card.classList.remove("d-none");
-          } else {
-            card.classList.add("d-none");
-          }
-        }
-      });
-
-    });
-  });
-
-//
-
-// const toggleBtnFilter = document.getElementById("filterToggle");
-// const options = document.getElementById("filterOptions");
-
-// toggleBtn.addEventListener("click", function() {
-//   options.classList.toggle("show");
 // });
 
 
-// 
+// // THEME TOGGLE
+// const toggleBtn = document.getElementById("themeToggle");
 
-function filterPlaces(category){
-  const cards=document.querySelectorAll(".place-card");
-  cards.forEach(card=>{
-    if(category==="all"){
-      card.style.display="block";
-    }
-    else if(card.classList.contains(category)){
-      card.style.display="block";
-    }
-    else{
-      card.style.display="none";
-    }
-  });
-}
+// if (toggleBtn) {
+//     toggleBtn.addEventListener("click", () => {
 
-filterButtons.forEach(button => {
-  button.addEventListener("click", function() {
+//         document.body.classList.toggle("dark-mode");
 
-    filterButtons.forEach(btn => btn.classList.remove("active"));
-    this.classList.add("active");
+//         localStorage.setItem(
+//             "theme",
+//             document.body.classList.contains("dark-mode") ? "dark" : "light"
+//         );
 
-    const filterValue = this.getAttribute("data-filter");
-
-    document.querySelectorAll(".place-card").forEach(card => {
-      if (filterValue === "all") {
-        card.classList.remove("d-none");
-      } else {
-        card.classList.toggle("d-none", !card.classList.contains(filterValue));
-      }
-    });
-
-  });
-});
+//     });
+// }
 
 
+// // FILTER (only runs if elements exist)
+// const filterButtons = document.querySelectorAll(".filter-btn");
+// const cards = document.querySelectorAll(".place-card");
+
+// if (filterButtons.length > 0) {
+
+//     filterButtons.forEach(button => {
+
+//         button.addEventListener("click", () => {
+
+//             filterButtons.forEach(btn => btn.classList.remove("active"));
+//             button.classList.add("active");
+
+//             const filterValue = button.getAttribute("data-filter");
+
+//             cards.forEach(card => {
+
+//                 const category = card.getAttribute("data-category");
+
+//                 if (filterValue === "all" || category === filterValue) {
+//                     card.style.display = "block";
+//                 } else {
+//                     card.style.display = "none";
+//                 }
+
+//             });
+
+//         });
+
+//     });
+
+// }
