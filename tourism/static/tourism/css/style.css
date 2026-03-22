@@ -60,7 +60,12 @@ section p {
 .navbar .bi {
  color: var(--bs-body-color);
 }
-
+.navbar .container .navbar-brand{
+  margin-left: -10%;
+}
+.navbar-nav{
+  margin-right: -10%;
+}
 /* Improve nav link spacing */
 .navbar .nav-link {
   padding: 0.5rem 1rem;

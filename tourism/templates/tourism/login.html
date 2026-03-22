@@ -115,12 +115,34 @@ background:#157347;
 
 <div class="logo-title">
 <a href="{% url 'home' %}" class="back-btn">
-        <i class="bi bi-arrow-left"></i>
+        <i class="bi bi-house-door"></i>
     </a>
 <h3><i class="bi bi-geo-alt"></i>Pathanamthitta Explorer</h3>
 <p class="text-muted">Login to your account</p>
 
 </div>
+
+{% if form.errors %}
+<div class="alert alert-danger">
+
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div>{{ error }}</div>
+        {% endfor %}
+    {% endfor %}
+
+    {% for error in form.non_field_errors %}
+        <div>{{ error }}</div>
+    {% endfor %}
+
+</div>
+{% endif %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+{% endif %}
 
 <form method="POST">
 

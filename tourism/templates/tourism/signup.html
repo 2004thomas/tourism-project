@@ -103,7 +103,9 @@ border-radius:10px;
 padding:12px;
 
 }
-
+input:focus{
+    box-shadow: 0 0 8px rgba(13,110,253,0.5);
+}
 </style>
 
 </head>
@@ -114,12 +116,28 @@ padding:12px;
 
 <div class="title">
 <a href="{% url 'home' %}" class="back-btn">
-        <i class="bi bi-arrow-left"></i>
+        <i class="bi bi-house-door"></i>
     </a>
 <h3><i class="bi bi-person-plus"></i> Create Account</h3>
 <p class="text-muted">Join PTA Explorer</p>
 
 </div>
+
+{% if form.errors %}
+<div class="alert alert-danger">
+
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div>{{ error }}</div>
+        {% endfor %}
+    {% endfor %}
+
+    {% for error in form.non_field_errors %}
+        <div>{{ error }}</div>
+    {% endfor %}
+
+</div>
+{% endif %}
 
 <form method="POST">
 
@@ -207,6 +225,46 @@ Already have an account?
 </div>
 
 <script>
+
+    
+
+const usernameInput = document.getElementById("username");
+const passwordInput = document.getElementById("password");
+
+usernameInput.addEventListener("input", () => {
+    const value = usernameInput.value;
+
+    const validLength = value.length >= 4;
+    const validChars = /^[a-zA-Z0-9@.+-_]+$/.test(value);
+
+    const rules = document.getElementById("usernameRules");
+
+    rules.innerHTML = `
+    <span style="color:${validLength ? 'green' : 'red'}">✔ At least 4 characters</span><br>
+    <span style="color:${validChars ? 'green' : 'red'}">✔ Valid characters (@ . + - _)</span>
+    `;
+});
+
+
+passwordInput.addEventListener("input", () => {
+    const value = passwordInput.value;
+
+    const length = value.length >= 8;
+    const upper = /[A-Z]/.test(value);
+    const number = /[0-9]/.test(value);
+    const special = /[!@#$%^&*]/.test(value);
+
+    const rules = document.getElementById("passwordRules");
+
+    rules.innerHTML = `
+    <span style="color:${length ? 'green' : 'red'}">✔ At least 8 characters</span><br>
+    <span style="color:${upper ? 'green' : 'red'}">✔ One uppercase letter</span><br>
+    <span style="color:${number ? 'green' : 'red'}">✔ One number</span><br>
+    <span style="color:${special ? 'green' : 'red'}">✔ One special character</span>
+    `;
+});
+
+
     document.addEventListener("DOMContentLoaded", function() {
 
     const savedTheme = localStorage.getItem("theme");
